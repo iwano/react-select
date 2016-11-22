@@ -209,7 +209,7 @@ const Select = React.createClass({
 		if (this.menu && this.focused && this.state.isOpen && !this.hasScrolledToOption) {
 			let focusedOptionNode = ReactDOM.findDOMNode(this.focused);
 			let menuNode = ReactDOM.findDOMNode(this.menu);
-			menuNode.scrollTop = focusedOptionNode.offsetTop;
+			menuNode.scrollTop = this.props.filterButtons ? focusedOptionNode.offsetTop - 30 : focusedOptionNode.offsetTop;
 			this.hasScrolledToOption = true;
 		} else if (!this.state.isOpen) {
 			this.hasScrolledToOption = false;
@@ -420,6 +420,7 @@ const Select = React.createClass({
 			isOpen: isOpen
 		});
 		this._openAfterFocus = false;
+		this.props.onInputChange(this.state.inputValue);
 	},
 
 	handleInputBlur (event) {
@@ -459,6 +460,12 @@ const Select = React.createClass({
 			isPseudoFocused: false,
 			inputValue: newInputValue
 		});
+	},
+
+	handleFilterButtonClick (value, event) {
+		event.preventDefault();
+		this.props.onFilterButtonClick(value);
+		this.props.onInputChange(this.state.inputValue);
 	},
 
 	handleKeyDown (event) {
@@ -1029,6 +1036,13 @@ const Select = React.createClass({
 
 		return (
 			<div ref={ref => this.menuContainer = ref} className="Select-menu-outer" style={this.props.menuContainerStyle}>
+				{(() => {
+					if (this.props.filterButtons) {
+						return <ul className="tabs" onMouseDown={this.handleMouseDownOnMenu}>
+							{this.props.filterButtons.map(filter => <li className={`tab ${this.props.activeFilterButton === filter.value ? 'active' : ''}`}><a href="#" onClick={this.handleFilterButtonClick.bind(this, filter.value)}>{filter.label}</a></li>)}
+						</ul>
+					}
+				})()}
 				<div onMouseDown={this.handleMouseDownOnMenu}>
 					{this.props.children}
 				</div>

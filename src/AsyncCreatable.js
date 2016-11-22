@@ -29,6 +29,7 @@ const AsyncCreatable = React.createClass({
 									creatableProps.ref(ref);
 									asyncProps.ref(ref);
 								}}
+                children={this.props.children}
 							/>
 						)}
 					</Select.Creatable>

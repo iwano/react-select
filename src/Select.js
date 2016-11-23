@@ -1039,7 +1039,7 @@ const Select = React.createClass({
 				{(() => {
 					if (this.props.filterButtons) {
 						return <ul className="tabs" onMouseDown={this.handleMouseDownOnMenu}>
-							{this.props.filterButtons.map(filter => <li className={`tab ${this.props.activeFilterButton === filter.value ? 'active' : ''}`}><a href="#" onClick={this.handleFilterButtonClick.bind(this, filter.value)}>{filter.label}</a></li>)}
+							{this.props.filterButtons.map(filter => <li key={filter.value} className={`tab ${this.props.activeFilterButton === filter.value ? 'active' : ''}`}><a href="#" onClick={this.handleFilterButtonClick.bind(this, filter.value)}>{filter.label}</a></li>)}
 						</ul>
 					}
 				})()}

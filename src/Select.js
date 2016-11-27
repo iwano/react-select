@@ -420,7 +420,7 @@ const Select = React.createClass({
 			isOpen: isOpen
 		});
 		this._openAfterFocus = false;
-		if (this.props.filterButtons) {
+		if (this.props.loadOnFocus) {
 			this.props.onInputChange(this.state.inputValue);
 		}
 	},
